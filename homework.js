@@ -47,27 +47,26 @@ var items = {
     "ceasar salad": {price: 4.2, type: "PreparedFood"},
 };
 
-var itemTypes =
-    {
-        "Groceries": {
-            "Alabama" : 0,
-            "Alaska" : 0,
-            "Arizona" : "",
-            "Arkansas" : 0.015,
-            "California" : "",
-            "Colorado" : "",
-            "Connecticut" : ""
-        },
-        "PrescriptionDrug": {
-            "Alabama" : "",
-            "Alaska" : 0,
-            "Arizona" : "",
-            "Arkansas" : "",
-            "California" : "",
-            "Colorado" : "",
-            "Connecticut" : ""
-        }
-    };
+var itemTypes = {
+    "Groceries": {
+        "Alabama": 0,
+        "Alaska": 0,
+        "Arizona": "",
+        "Arkansas": 0.015,
+        "California": "",
+        "Colorado": "",
+        "Connecticut": ""
+    },
+    "PrescriptionDrug": {
+        "Alabama": "",
+        "Alaska": 0,
+        "Arizona": "",
+        "Arkansas": "",
+        "California": "",
+        "Colorado": "",
+        "Connecticut": ""
+    }
+};
 
 function base(state) {
     var taxes = {
@@ -81,6 +80,74 @@ function base(state) {
     };
     return taxes[state];
 }
+
+var states = {
+    "Alabama" : {
+        baseTax: 0.04,
+        categoriesTaxes:{
+            groceries: 0,
+            prescriptionDrug: "",
+        }
+    },
+    "Alaska" : {
+        baseTax: 0,
+        categoriesTaxes:{
+            groceries: 0,
+            prescriptionDrug: 0
+        }
+    },
+    "Arizona" : {
+        baseTax: 0.056,
+        categoriesTaxes:{
+            groceries: "",
+            prescriptionDrug: ""
+        }
+    },
+    "Arkansas" : {
+        baseTax: 0.065,
+        categoriesTaxes:{
+            groceries: 0.015,
+            prescriptionDrug: ""
+        }
+    },
+    "California" : {
+        baseTax: 0.075,
+        categoriesTaxes:{
+            groceries: "",
+            prescriptionDrug: ""
+        }
+    },
+    "Colorado" : {
+        baseTax: 0.029,
+        categoriesTaxes:{
+            groceries: "",
+            prescriptionDrug: ""
+        }
+    },
+    "Connecticut" : {
+        baseTax: 0.0635,
+        categoriesTaxes:{
+            groceries: "",
+            prescriptionDrug: ""
+        }
+    },
+    "Tennessee" : {
+        baseTax: 0.07,
+        categoriesTaxes:{
+            groceries: 0.05,
+            prescriptionDrug: "",
+            preparedFood: ""
+        }
+    },
+    "Texas" : {
+        baseTax: 0.0625,
+        categoriesTaxes:{
+            groceries: 0,
+            prescriptionDrug: 0,
+            preparedFood: ""
+        }
+    }
+};
 
 function calc(state, itemType) {
 
