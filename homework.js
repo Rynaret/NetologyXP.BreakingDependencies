@@ -47,31 +47,6 @@ var items = {
     "ceasar salad": {price: 4.2, type: "PreparedFood"},
 };
 
-var itemTypes = {
-    "Groceries": {
-        "Alabama": 0,
-        "Alaska": 0,
-        "Arizona": "",
-        "Arkansas": 0.015,
-        "California": "",
-        "Colorado": "",
-        "Connecticut": ""
-    },
-    "PrescriptionDrug": {
-        "Alabama": "",
-        "Alaska": 0,
-        "Arizona": "",
-        "Arkansas": "",
-        "California": "",
-        "Colorado": "",
-        "Connecticut": ""
-    }
-};
-
-function getBaseTax(state) {
-    return states[state].baseTax;
-}
-
 var states = {
     "Alabama" : {
         baseTax: 0.04,
@@ -126,22 +101,29 @@ var states = {
         baseTax: 0.07,
         categoriesTaxes:{
             "Groceries": 0.05,
-            "PrescriptionDrug": "",
-            "PreparedFood": ""
+            "PrescriptionDrug": 0,
+            "PreparedFood": 0
         }
     },
     "Texas" : {
         baseTax: 0.0625,
         categoriesTaxes:{
-            "Groceries": 0,
-            "PrescriptionDrug": 0,
-            "PreparedFood": ""
+            "Groceries": "",
+            "PrescriptionDrug": "",
+            "PreparedFood": 0
         }
     }
 };
 
+function getState(state) {
+    return states[state];
+}
+function getBaseTax(state) {
+    return getState(state).baseTax;
+}
+
 function calc(state, itemType) {
-    var categoryTax = states[state].categoriesTaxes[itemType];
+    var categoryTax = getState(state).categoriesTaxes[itemType];
 
     if (categoryTax === "") {
         return 0;
@@ -149,11 +131,14 @@ function calc(state, itemType) {
     return getBaseTax(state) + categoryTax;
 }
 
+function getItem(item) {
+    return items[item];
+}
 function getProductType(item) {
-    return items[item].type;
+    return getItem(item).type;
 }
 function getProductPrice(item) {
-    return items[item].price;
+    return getItem(item).price;
 }
 function calculatePriceFor(state, item){
     var result = null;
