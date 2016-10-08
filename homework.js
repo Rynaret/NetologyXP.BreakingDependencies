@@ -91,6 +91,18 @@ function calc(state, itemType) {
     return base(state) + itemTypeTaxModifier[state];
 }
 
+function calculatePriceFor(state, item){
+    var result = null;
+    if (items[item].type === "PreparedFood") {
+        result = ( 1 + base(state) ) * items[item].price;
+    }
+    else {
+        result = calc(state, items[item].type) * items[item].price + items[item].price;
+    }
+
+    return result;
+}
+
 class TaxCalculator {
     // У этой функции нелья менять интерфейс
     // Но можно менять содержимое
@@ -100,13 +112,9 @@ class TaxCalculator {
         console.log(`----------${state}-----------`);
         for (var i = 0; i < ordersCount; i++) {
             var item = getSelectedItem();
-            var result = null;
-            if (items[item].type === "PreparedFood") {
-                result = ( 1 + base(state) ) * items[item].price;
-            }
-            else {
-                result = calc(state, items[item].type) * items[item].price + items[item].price;
-            }
+
+            var result = calculatePriceFor(state, item);
+
             console.log(`${item}: $${result.toFixed(2)}`);
         }
         console.log(`----Have a nice day!-----`);
@@ -115,7 +123,7 @@ class TaxCalculator {
 
 //############################
 //Production - код:
-production();
+ production();
 
 //############################
 //Тесты:
@@ -127,7 +135,7 @@ var tests = [
     () => assertEquals(2 * (1 + 0.0635), calculatePriceFor("Connecticut", "hamburger")),
 ];
 //Раскомментируйте следующую строчку для запуска тестов:
-//runTests (tests);
+runTests (tests);
 
 //############################
 //Код ниже этой строчки не надо менять для выполнения домашней работы
