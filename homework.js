@@ -131,22 +131,24 @@ function calc(state, itemType) {
     return getBaseTax(state) + categoryTax;
 }
 
-function getItem(item) {
-    return items[item];
+class Product{
+    constructor(item) {
+        this._item = item;
+    }
+
+    get productType(){return this._item.type;}
+    get productPrice(){return this._item.price;}
 }
-function getProductType(item) {
-    return getItem(item).type;
-}
-function getProductPrice(item) {
-    return getItem(item).price;
-}
-function calculatePriceFor(state, item){
+
+function calculatePriceFor(state, itemArg){
+    var item = new Product(items[itemArg]);
+
     var result = null;
-    if (getProductType(item) === "PreparedFood") {
-        result = ( 1 + getBaseTax(state) ) * getProductPrice(item);
+    if (item.productType === "PreparedFood") {
+        result = ( 1 + getBaseTax(state) ) * item.productPrice;
     }
     else {
-        result = calc(state, getProductType(item)) * getProductPrice(item) + getProductPrice(item);
+        result = calc(state, item.productType) * item.productPrice + item.productPrice;
     }
 
     return result;
