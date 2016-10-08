@@ -134,8 +134,8 @@ class Product{
         this._item = item;
     }
 
-    get productType(){return this._item.type;}
-    get productPrice(){return this._item.price;}
+    get type(){return this._item.type;}
+    get price(){return this._item.price;}
 }
 
 function calc(state, itemType) {
@@ -152,11 +152,11 @@ function calculatePriceFor(stateArg, itemArg){
     var state = new State(getState(stateArg));
 
     var result = null;
-    if (item.productType === "PreparedFood") {
-        result = ( 1 + state.baseTax ) * item.productPrice;
+    if (item.type === "PreparedFood") {
+        result = ( 1 + state.baseTax ) * item.price;
     }
     else {
-        result = calc(state, item.productType) * item.productPrice + item.productPrice;
+        result = calc(state, item.type) * item.price + item.price;
     }
 
     return result;
