@@ -68,17 +68,8 @@ var itemTypes = {
     }
 };
 
-function base(state) {
-    var taxes = {
-        "Alabama" : 0.04,
-        "Alaska" : 0,
-        "Arizona" : 0.056,
-        "Arkansas" : 0.065,
-        "California" : 0.075,
-        "Colorado" : 0.029,
-        "Connecticut" : 0.0635
-    };
-    return taxes[state];
+function getBaseTax(state) {
+    return states[state].baseTax;
 }
 
 var states = {
@@ -155,13 +146,13 @@ function calc(state, itemType) {
     if (itemTypeTaxModifier[state] === "") {
         return 0;
     }
-    return base(state) + itemTypeTaxModifier[state];
+    return getBaseTax(state) + itemTypeTaxModifier[state];
 }
 
 function calculatePriceFor(state, item){
     var result = null;
     if (items[item].type === "PreparedFood") {
-        result = ( 1 + base(state) ) * items[item].price;
+        result = ( 1 + getBaseTax(state) ) * items[item].price;
     }
     else {
         result = calc(state, items[item].type) * items[item].price + items[item].price;
