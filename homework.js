@@ -118,19 +118,14 @@ var states = {
 function getState(state) {
     return states[state];
 }
-function getBaseTax(state) {
-    return getState(state).baseTax;
-}
-
-function calc(state, itemType) {
-    var categoryTax = getState(state).categoriesTaxes[itemType];
-
-    if (categoryTax === "") {
-        return 0;
+class State{
+    constructor(state){
+        this._state = state;
     }
-    return getBaseTax(state) + categoryTax;
-}
 
+    get baseTax() {return this._state.baseTax;}
+    get categoriesTaxes(){return this._state.categoriesTaxes;}
+}
 class Product{
     constructor(item) {
         this._item = item;
@@ -140,12 +135,22 @@ class Product{
     get productPrice(){return this._item.price;}
 }
 
-function calculatePriceFor(state, itemArg){
+function calc(state, itemType) {
+    var categoryTax = state.categoriesTaxes[itemType];
+
+    if (categoryTax === "") {
+        return 0;
+    }
+    return state.baseTax + categoryTax;
+}
+
+function calculatePriceFor(stateArg, itemArg){
     var item = new Product(items[itemArg]);
+    var state = new State(getState(stateArg));
 
     var result = null;
     if (item.productType === "PreparedFood") {
-        result = ( 1 + getBaseTax(state) ) * item.productPrice;
+        result = ( 1 + state.baseTax ) * item.productPrice;
     }
     else {
         result = calc(state, item.productType) * item.productPrice + item.productPrice;
