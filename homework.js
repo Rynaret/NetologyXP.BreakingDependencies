@@ -76,66 +76,66 @@ var states = {
     "Alabama" : {
         baseTax: 0.04,
         categoriesTaxes:{
-            groceries: 0,
-            prescriptionDrug: "",
+            "Groceries": 0,
+            "PrescriptionDrug": "",
         }
     },
     "Alaska" : {
         baseTax: 0,
         categoriesTaxes:{
-            groceries: 0,
-            prescriptionDrug: 0
+            "Groceries": 0,
+            "PrescriptionDrug": 0
         }
     },
     "Arizona" : {
         baseTax: 0.056,
         categoriesTaxes:{
-            groceries: "",
-            prescriptionDrug: ""
+            "Groceries": "",
+            "PrescriptionDrug": ""
         }
     },
     "Arkansas" : {
         baseTax: 0.065,
         categoriesTaxes:{
-            groceries: 0.015,
-            prescriptionDrug: ""
+            "Groceries": 0.015,
+            "PrescriptionDrug": ""
         }
     },
     "California" : {
         baseTax: 0.075,
         categoriesTaxes:{
-            groceries: "",
-            prescriptionDrug: ""
+            "Groceries": "",
+            "PrescriptionDrug": ""
         }
     },
     "Colorado" : {
         baseTax: 0.029,
         categoriesTaxes:{
-            groceries: "",
-            prescriptionDrug: ""
+            "Groceries": "",
+            "PrescriptionDrug": ""
         }
     },
     "Connecticut" : {
         baseTax: 0.0635,
         categoriesTaxes:{
-            groceries: "",
-            prescriptionDrug: ""
+            "Groceries": "",
+            "PrescriptionDrug": ""
         }
     },
     "Tennessee" : {
         baseTax: 0.07,
         categoriesTaxes:{
-            groceries: 0.05,
-            prescriptionDrug: "",
-            preparedFood: ""
+            "Groceries": 0.05,
+            "PrescriptionDrug": "",
+            "PreparedFood": ""
         }
     },
     "Texas" : {
         baseTax: 0.0625,
         categoriesTaxes:{
-            groceries: 0,
-            prescriptionDrug: 0,
-            preparedFood: ""
+            "Groceries": 0,
+            "PrescriptionDrug": 0,
+            "PreparedFood": ""
         }
     }
 };
@@ -149,13 +149,16 @@ function calc(state, itemType) {
     return getBaseTax(state) + itemTypeTaxModifier[state];
 }
 
+function getProductType(item) {
+    return items[item].type;
+}
 function calculatePriceFor(state, item){
     var result = null;
-    if (items[item].type === "PreparedFood") {
+    if (getProductType(item) === "PreparedFood") {
         result = ( 1 + getBaseTax(state) ) * items[item].price;
     }
     else {
-        result = calc(state, items[item].type) * items[item].price + items[item].price;
+        result = calc(state, getProductType(item)) * items[item].price + items[item].price;
     }
 
     return result;
