@@ -141,12 +141,12 @@ var states = {
 };
 
 function calc(state, itemType) {
+    var categoryTax = states[state].categoriesTaxes[itemType];
 
-    var itemTypeTaxModifier = itemTypes[itemType];
-    if (itemTypeTaxModifier[state] === "") {
+    if (categoryTax === "") {
         return 0;
     }
-    return getBaseTax(state) + itemTypeTaxModifier[state];
+    return getBaseTax(state) + categoryTax;
 }
 
 function getProductType(item) {
@@ -187,7 +187,7 @@ class TaxCalculator {
 
 //############################
 //Production - код:
- production();
+// production();
 
 //############################
 //Тесты:
