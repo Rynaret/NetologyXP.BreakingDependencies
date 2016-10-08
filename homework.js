@@ -118,6 +118,9 @@ var states = {
 function getState(state) {
     return states[state];
 }
+function getItem(itemArg) {
+    return items[itemArg];
+}
 class State{
     constructor(state){
         this._state = state;
@@ -145,7 +148,7 @@ function calc(state, itemType) {
 }
 
 function calculatePriceFor(stateArg, itemArg){
-    var item = new Product(items[itemArg]);
+    var item = new Product(getItem(itemArg));
     var state = new State(getState(stateArg));
 
     var result = null;
